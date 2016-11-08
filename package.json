@@ -1,0 +1,29 @@
+{
+  "name": "blog-application",
+  "version": "1.0.0",
+  "description": "A simple blog application allowing users to register, post and comment on other posts",
+  "main": "app.js\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[Csrc/app.js\u001b[2~",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sabrinaedi/blog-application.git"
+  },
+  "author": "Sabrina",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sabrinaedi/blog-application/issues"
+  },
+  "homepage": "https://github.com/sabrinaedi/blog-application#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "pg": "^6.1.0",
+    "pug": "^2.0.0-beta6",
+    "sequelize": "^3.24.8"
+  },
+  "devDependencies": {},
+  "keywords": []
+}
