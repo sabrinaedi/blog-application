@@ -1,0 +1,37 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background-size: 100%;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer.page-footer, nav {
+	background-color: #3e2723;
+}
+
+h1 {
+	background-color: #d7ccc8;
+	padding: 30px;
+	font-family: 'Shrikhand';font-size: 22px;
+	font-size: 50px;
+}
+
+.post {
+	background-color: white;
+	border-radius: 10px;
+	border-color: #795548;
+	border-width: 5px;
+	border-style: solid;
+}
+
+.title {
+	border-bottom:1px solid;
+}
+
+html {
+   font-family: Trebuchet, sans-serif;
+}

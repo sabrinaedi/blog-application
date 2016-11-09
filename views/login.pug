@@ -1,5 +1,6 @@
 html
-	-var title = "Profile"
+	
+	-var title = "Login"
 	include includes/header.pug
 
 	body
@@ -13,17 +14,26 @@ html
 							a(href='/') Home
 						li
 							a(href='/login') Login
-						li.active
+						li
 							a(href='/profile') Profile
 						li
 							a(href='users/new') Sign up
 
-		h1.center-align Profile
+		h1.center-align Login
 
 		div.container.center-align
 			div.row.text-align
 				div.col.l6.offset-l3.s12.post
+					div.input-field
 
-					h3 Welcome, #{data.name}!
+						form(method='post' action='/login')
 
-					h3 Your e-mail address is #{data.email}
+							p E-mail
+							input(type='text', name='loginEmail')
+
+							p Password
+							input(type='text', name='loginPassword')
+
+							br
+							br
+							input(type='submit' value='submit')

@@ -81,6 +81,10 @@ app.get('/', (req, res) => {
 	})
 })
 
+app.get('/login', (req, res) => {
+	res.render('login')
+})
+
 // route to display form to register as new user
 app.get('/users/new', (req, res) => {
 	res.render('register')
@@ -147,7 +151,7 @@ app.get('/posts/new', (req, res) => {
 	res.render('post')
 })
 
-// route that creates a new post in the database table
+// route that creates a new post in the database tables
 app.post('/posts', (req, res) => {
 	Post.create({
 		title: req.body.inputTitle,

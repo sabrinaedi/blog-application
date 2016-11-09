@@ -1,22 +1,29 @@
 html
-	head
-		body
+	
+	-var title = "Home"
+	include includes/header.pug
 
-			h1 Login
+	body
 
-			form(method='post' action='/login')
+		nav
+			.nav-wrapper
+				a.brand-logo.center
+					i.material-icons face 
+					ul.left.hide-on-med-and-dow
+						li.active
+							a(href='/') Home
+						li
+							a(href='/login') Login
+						li
+							a(href='/profile') Profile
+						li
+							a(href='users/new') Sign up
 
-				p E-mail
-				input(type='text', name='loginEmail')
+		h1.center-align THE Blog
 
-				p Password
-				input(type='text', name='loginPassword')
-
-				br
-				br
-				input(type='submit' value='submit')
-
-
-			each thing in data
-				p #{thing.title}
-				p #{thing.message}
+		each thing in data
+			div.container.center-align
+				div.row.text-align
+					div.col.l6.offset-l3.s12.post
+								p.title #{thing.title}
+								p #{thing.message}

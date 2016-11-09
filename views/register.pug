@@ -1,20 +1,40 @@
 html
-	head
-		body
+	-var title = 'Sign up'
+	include includes/header.pug
+	body
 
-			h1 Sign up now!
+		nav
+			.nav-wrapper
+				a.brand-logo.center
+					i.material-icons face 
+					ul.left.hide-on-med-and-dow
+						li
+							a(href='/') Home
+						li
+							a(href='/login') Login
+						li
+							a(href='/profile') Profile
+						li.active
+							a(href='users/new') Sign up
 
-			form(method='post' action='/users')
+		h1.center-align Sign up now!
 
-				p Username
-				input(type='text', name='inputName')
+		div.container.center-align
+			div.row.text-align
+				div.col.l6.offset-l3.s12.post
+					div.input-field
 
-				p E-mail
-				input(type='text', name='inputEmail')
+						form(method='post' action='/users')
 
-				p Password
-				input(type='text', name='inputPassword')
+							p Username
+							input(type='text', name='inputName')
 
-				br
-				br
-				input(type='submit' value='submit')
+							p E-mail
+							input(type='text', name='inputEmail')
+
+							p Password
+							input(type='text', name='inputPassword')
+
+							br
+							br
+							input(type='submit' value='submit')
