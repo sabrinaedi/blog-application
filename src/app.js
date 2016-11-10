@@ -70,10 +70,15 @@ app.get('/ping', (req, res) => {
 	res.send('Pong')
 }) 
 
-// route for index page, displaying all posts
+// route for index page, displaying all posts (including attributed User)
 app.get('/', (req, res) => {
 	console.log('index is running')
-	Post.findAll ()
+	Post.findAll ( {
+		include: [{
+			model: User,
+			attributes: ['name']
+		}]
+	})
 	.then(posts => {
 		res.render('index', {
 			data: posts
@@ -96,10 +101,7 @@ app.post('/users', (req, res) => {
 		name: req.body.inputName,
 		email: req.body.inputEmail,
 		password: req.body.inputPassword
-	}).then(user => {
-		user.createPost({
-		})
-	})
+	}).
 	res.redirect('/profile', {
 	})
 })
@@ -126,6 +128,7 @@ app.get('/profile', (req, res) => {
 
 // route for user login (start session)
 app.post('/login', (req, res) => {
+
 	User.findOne({
 		where: {
 			email: req.body.loginEmail
@@ -153,12 +156,20 @@ app.get('/posts/new', (req, res) => {
 
 // route that creates a new post in the database tables
 app.post('/posts', (req, res) => {
-	Post.create({
+	User.findOne({
+		where: {
+			email: req.session.user.email
+		}
+	}). then (user => {
+		user.createPost({	
 		title: req.body.inputTitle,
-		message: req.body.inputMessage
-	})
+		message: req.body.inputMessage,
+		})
+	}). then (user => {
 	res.redirect('/')
+	})
 })
+
 
 // sequelizes synchronizes with postgres database, only then starts listening to the port
 db.sync().then(db => {
