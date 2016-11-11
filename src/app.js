@@ -169,6 +169,11 @@ app.get('/viewpost', (req, res) => {
 		where: {
 			id: req.query.id
 		}
+	}).then (post => {
+	Comment.findAll({
+		where: {
+			postId: req.query.id
+		}
 	}).then ( post => {
 		console.log(post)
 		res.render('post', {
