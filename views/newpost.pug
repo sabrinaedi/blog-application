@@ -1,9 +1,8 @@
 html
-	-var title = "Profile"
+	-var title = 'new Post'
 	include includes/header.pug
-
+	
 	body
-
 		nav
 			.nav-wrapper
 				a.brand-logo.center
@@ -18,14 +17,23 @@ html
 						li
 							a(href='users/new') Sign up
 
-		h1.center-align Profile
+		h1 Make a Post!
 
 		div.container.center-align
-			div.row.text-align
-				div.col.l6.offset-l3.s12.post
+				div.row.text-align
+					div.col.l6.offset-l3.s12.post
 
-					h3 Welcome, #{data.name}!
+						form(method='post' action='/posts')
 
-					h3 Your e-mail address is #{data.email}
+							p Title
+							input(type='text', name='inputTitle')
+
+							p Post
+							textarea(type='text', name='inputMessage')
+
+							br
+							br
+							input(type='submit' value='submit')
 
 		include includes/footer.pug
+

@@ -1,36 +1,59 @@
 html
-	-var title = 'new Post'
-	include includes/header.pug
 	
+	-var title = "Post"
+	include includes/header.pug
+
 	body
+
 		nav
 			.nav-wrapper
 				a.brand-logo.center
 					i.material-icons face 
 					ul.left.hide-on-med-and-dow
-						li
-							a(href='/') Home
-						li
-							a(href='/login') Login
-						li.active
-							a(href='/profile') Profile
-						li
-							a(href='users/new') Sign up
-
-		h1 Make a Post!
+						if user
+							li
+								a(href='/') Home
+							li
+								a(href='/login') Login
+							li
+								a(href='/profile') Profile
+							li
+								a(href='/users/new') Sign up
+							li
+								a(href='/posts/new') New Entry
+						else
+							li.active
+								a(href='/') Home
+							li
+								a(href='/login') Login
+							li
+								a(href='users/new') Sign up
+							li
+								a(href='/posts/new') New Entry
 
 		div.container.center-align
-				div.row.text-align
-					div.col.l6.offset-l3.s12.post
+			div.roq.text-align
+				div.col.l6.offset-l3.s12.post
+					if data.user
+						p #{data.user.name}
+					p #{data.createdAt}
+					p.title #{data.title}
+					p #{data.message}
+					button Comment
 
-						form(method='post' action='/posts')
+			div.row.text-align
+				div.col.l6.offset-l3.s12.post
 
-							p Title
-							input(type='text', name='inputTitle')
+					form(method='post' action='/comment')
 
-							p Post
-							textarea(type='text', name='inputMessage')
+						p Comment
+						textarea(type='text', name='inputComment')
 
-							br
-							br
-							input(type='submit' value='submit')
+						br
+						br
+						input(type='submit' value='submit')
+
+
+	include includes/footer.pug
+
+								

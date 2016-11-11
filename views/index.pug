@@ -20,7 +20,7 @@ html
 							li
 								a(href='/users/new') Sign up
 							li
-								a(href='/post') New Entry
+								a(href='/posts/new') New Entry
 						else
 							li.active
 								a(href='/') Home
@@ -38,7 +38,14 @@ html
 			div.container.center-align
 				div.row.text-align
 					div.col.l6.offset-l3.s12.post
-								p.title #{thing.title}
-								p #{thing.message}
-								if thing.user
-									p #{thing.user.name}
+						if thing.user
+							p #{thing.user.name}
+						p #{thing.createdAt}
+						a.title(href="/viewpost?id=" + thing.id) #{thing.title}
+						p #{thing.message}
+						button Comment
+
+
+		include includes/footer.pug
+
+								

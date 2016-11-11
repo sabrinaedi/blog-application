@@ -42,14 +42,11 @@ let User = db.define('users', {
 })
 
 let Post = db.define('posts', {
-	name: sequelize.STRING,
 	title: sequelize.STRING,
 	message: sequelize.STRING
 })
 
 let Comment = db.define('comments', {
-	name: sequelize.STRING,
-	title: sequelize.STRING,
 	message: sequelize.STRING
 })
 
@@ -101,16 +98,10 @@ app.post('/users', (req, res) => {
 		name: req.body.inputName,
 		email: req.body.inputEmail,
 		password: req.body.inputPassword
-	}).
-	res.redirect('/profile', {
-	})
-})
-
-// temporary route for displaying all users for test purposes
-app.get('/users', (req, res) => {
-	User.findAll ()
-	.then(users => {
-		res.send(users)
+	}).then (user => {  
+		req.session.user = user
+	}).then (user => {
+	res.redirect('/profile')
 	})
 })
 
@@ -151,7 +142,7 @@ app.post('/login', (req, res) => {
 
 // route to display form to create new post
 app.get('/posts/new', (req, res) => {
-	res.render('post')
+	res.render('newpost')
 })
 
 // route that creates a new post in the database tables
@@ -162,11 +153,47 @@ app.post('/posts', (req, res) => {
 		}
 	}). then (user => {
 		user.createPost({	
-		title: req.body.inputTitle,
-		message: req.body.inputMessage,
+			title: req.body.inputTitle,
+			message: req.body.inputMessage,
 		})
 	}). then (user => {
-	res.redirect('/')
+		res.redirect('/')
+	})
+})
+
+//route to display details of a post and comment page
+app.get('/viewpost', (req, res) => {
+	console.log(req.query.id)
+	req.session.postid = req.query.id
+	Post.findOne({
+		where: {
+			id: req.query.id
+		}
+	}).then ( post => {
+		console.log(post)
+		res.render('post', {
+			data: post
+		})
+	})
+	
+})
+
+// route to add a new comment
+app.post('/comment', (req, res) => {
+	User.findOne({
+		where: {
+			email: req.session.user.email
+		}
+	}).then ( user => {
+		console.log('CHECK THIS OUT')
+		console.log(user)
+		user.createComment({
+			postId: req.session.postid,
+			message: req.body.inputComment
+		})
+
+	}).then (comment => {
+		res.redirect('/')
 	})
 })
 
