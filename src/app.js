@@ -168,19 +168,14 @@ app.get('/viewpost', (req, res) => {
 	Post.findOne({
 		where: {
 			id: req.query.id
-		}
-	}).then (post => {
-	Comment.findAll({
-		where: {
-			postId: req.query.id
-		}
+		},
+		include: [{model: User},{model: Comment, include: [User]}]
 	}).then ( post => {
 		console.log(post)
 		res.render('post', {
 			data: post
 		})
 	})
-	
 })
 
 // route to add a new comment
@@ -190,11 +185,16 @@ app.post('/comment', (req, res) => {
 			email: req.session.user.email
 		}
 	}).then ( user => {
-		console.log('CHECK THIS OUT')
-		console.log(user)
-		user.createComment({
-			postId: req.session.postid,
-			message: req.body.inputComment
+		Post.findOne({
+			where: {
+				id: req.session.postid
+			}
+		}).then ( post => {
+			user.createComment({
+				message: req.body.inputComment
+			}).then( comment => {
+				comment.setUser(user)
+			} )
 		})
 
 	}).then (comment => {
@@ -202,10 +202,46 @@ app.post('/comment', (req, res) => {
 	})
 })
 
+app.post('/searchUser', (req, res) => {
+	User.findOne ({
+		where: {
+			name: req.body.inputSearch 
+		}
+	}). then ( user  => {
+		Post.findAll({
+			where: {
+				userId: user.id
+			}
+		}). then ( user => {
+			Comment.findAll({
+				where: {
+					userId: user.id
+				}
+			})
+		})
+	})
+})
 
 // sequelizes synchronizes with postgres database, only then starts listening to the port
-db.sync().then(db => {
+db.sync({force: true}).then(db => {
 	console.log('db is synced')
+	User.create({
+		name: "test",
+		password: "test",
+		email: "test"
+	}). then( user => {
+		user.createPost({
+			title: "testpost",
+			message: "blablabla"
+		}).then( post => {
+			post.createComment({
+				message: "comment blablablaba"
+			}).then( comment => {
+				comment.setUser( user)
+			})
+		})
+	})
+
 }).then (db => {
 	//determine a port
 	app.listen(8000, (req, res) => {

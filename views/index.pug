@@ -34,6 +34,19 @@ html
 
 		h1.center-align THE Blog
 
+		div.container.center-align
+			div.row.text-align
+					div.col.l6.offset-l3.s12.post
+
+						form(method='post' action='/searchUser')
+
+							p Looking for anything specific?
+							p Type in the name of the user you're searching for!
+							input(type='text', name='inputSearch')
+							br
+							br
+							input(type='submit' value='submit')
+
 		each thing in data
 			div.container.center-align
 				div.row.text-align
@@ -43,8 +56,6 @@ html
 						p #{thing.createdAt}
 						a.title(href="/viewpost?id=" + thing.id) #{thing.title}
 						p #{thing.message}
-						button Comment
-
 
 		include includes/footer.pug
 
