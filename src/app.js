@@ -202,6 +202,12 @@ app.post('/comment', (req, res) => {
 	})
 })
 
+// route that displays a page with a search fomr to look for specific users' posts
+app.get('/search', (req, res) => {
+	res.render('search')
+})
+
+// route that takes in the user input from the searchbar and searches for corresponding posts
 app.post('/searchUser', (req, res) => {
 	User.findOne ({
 		where: {
@@ -211,16 +217,16 @@ app.post('/searchUser', (req, res) => {
 		Post.findAll({
 			where: {
 				userId: user.id
-			}
-		}). then ( user => {
-			Comment.findAll({
-				where: {
-					userId: user.id
-				}
-			})
+			},
+			include: [User]
+		}).then ( post => {
+			console.log('LOOOK HEEEEEEEEEEERE:')
+			console.log(post)
+			res.render('search', {data: post})
 		})
 	})
 })
+
 
 // sequelizes synchronizes with postgres database, only then starts listening to the port
 db.sync({force: true}).then(db => {

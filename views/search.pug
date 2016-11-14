@@ -34,8 +34,23 @@ html
 
 		h1.center-align THE Blog
 
-		each thing in data
-			div.container.center-align
+		div.container.center-align
+			div.row.text-align
+				div.col.l6.offset-l3.s12.post
+
+					form(method='post' action='/searchUser')
+
+						p Looking for anything specific?
+						p Type in the name of the user you're searching for!
+						input(type='text', name='inputSearch')
+						br
+						br
+						input(type='submit' value='submit')
+
+			h3 Here's what we found:
+
+			each thing in data
+				
 				div.row.text-align
 					div.col.l6.offset-l3.s12.post
 						if thing.user
@@ -44,6 +59,8 @@ html
 						a.title(href="/viewpost?id=" + thing.id) #{thing.title}
 						p #{thing.message}
 
-		include includes/footer.pug
 
-								
+
+	
+
+		include includes/footer.pug
