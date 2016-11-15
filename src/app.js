@@ -95,8 +95,12 @@ app.get('/users/new', (req, res) => {
 app.post('/users', (req, res) => {
 	User.create({
 		name: req.body.inputName,
-		email: bcrypt.hashSync(req.body.inputEmail.toString(), bcrypt.genSaltSync(10)),
-		password: req.body.inputPassword
+		email: req.body.inputEmail,
+		password: bcrypt.genSaltSync(10, (err, salt) => {
+			bcrypt.hash(req.body.inputPassword.toString(), salt, (err, hash) => {
+				console.log(hash)
+			}) 
+		})
 	}).then (user => {  
 		req.session.user = user
 	}).then (user => {
@@ -124,7 +128,8 @@ app.post('/login/user', (req, res) => {
 		}
 	}).then ( (user) => {
 		console.log(user)
-			if (user !== null && req.body.loginPassword == user.password) {
+		bcrypt.compare(req.body.loginPassword.toString(), user.password, (err, result) => {
+			if (user !== null && result == true) {
 				req.session.user = user
 				res.redirect('/profile')
 				(console.log('found match'))
@@ -136,6 +141,7 @@ app.post('/login/user', (req, res) => {
 			console.log('there was some other error')
 			res.redirect('/')
 		}
+	})
 })
 
 // route for logout function
@@ -247,7 +253,8 @@ app.post('/searchUser', (req, res) => {
 
 
 // sequelizes synchronizes with postgres database, only then starts listening to the port
-db.sync({force: true}).then(db => {
+// creates dummie users for programming and debuggin purposes when force is made true
+db.sync().then(db => {
 	console.log('db is synced')
 	User.create({
 		name: "test",
