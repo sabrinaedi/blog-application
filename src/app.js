@@ -140,6 +140,13 @@ app.post('/login', (req, res) => {
 		}
 })
 
+// route for logout function
+app.post('/logout', (req, res) => {
+	console.log("was logged out")
+	delete req.session.user
+	res.redirect('/')
+})
+
 // route to display form to create new post
 app.get('/posts/new', (req, res) => {
 	res.render('newpost')
