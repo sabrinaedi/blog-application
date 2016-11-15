@@ -49,18 +49,15 @@ html
 
 			h3 Here's what we found:
 
-			each thing in data
-				
-				div.row.text-align
-					div.col.l6.offset-l3.s12.post
-						if thing.user
-							p #{thing.user.name}
-						p #{thing.createdAt}
-						a.title(href="/viewpost?id=" + thing.id) #{thing.title}
-						p #{thing.message}
-
-
-
+			if data
+				each thing in data
+					div.row.text-align
+						div.col.l6.offset-l3.s12.post
+							if thing.user
+								p #{thing.user.name}
+							p #{thing.createdAt}
+							a.title(href="/viewpost?id=" + thing.id) #{thing.title}
+							p #{thing.message}
 	
 
 		include includes/footer.pug
