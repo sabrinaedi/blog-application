@@ -10,26 +10,16 @@ html
 				a.brand-logo.center
 					i.material-icons face 
 					ul.left.hide-on-med-and-dow
-						if user
-							li.active
-								a(href='/') Home
-							li
-								a(href='/login') Login
-							li
-								a(href='/profile') Profile
-							li
-								a(href='/users/new') Sign up
-							li
-								a(href='/posts/new') New Entry
-						else
-							li.active
-								a(href='/') Home
-							li
-								a(href='/login') Login
-							li
-								a(href='users/new') Sign up
-							li
-								a(href='/posts/new') New Entry
+						li
+							a(href='/') Home
+						li
+							a(href='/profile') Profile
+						li
+							a(href='/posts/new') New Entry
+						li.active
+							a(href='/search') Search Post
+						li
+							a(href='/logout') Logout
 
 
 		h1.center-align THE Blog

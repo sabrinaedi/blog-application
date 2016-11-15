@@ -12,12 +12,10 @@ html
 					ul.left.hide-on-med-and-dow
 						li
 							a(href='/') Home
-						li
+						li.active
 							a(href='/login') Login
 						li
-							a(href='/profile') Profile
-						li
-							a(href='users/new') Sign up
+							a(href='/users/new') Sign up
 
 		h1.center-align Login
 
@@ -26,7 +24,7 @@ html
 				div.col.l6.offset-l3.s12.post
 					div.input-field
 
-						form(method='post' action='/login')
+						form(method='post' action='/login/user')
 
 							p E-mail
 							input(type='text', name='loginEmail')

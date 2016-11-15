@@ -10,26 +10,16 @@ html
 				a.brand-logo.center
 					i.material-icons face 
 					ul.left.hide-on-med-and-dow
-						if user
-							li
-								a(href='/') Home
-							li
-								a(href='/login') Login
-							li
-								a(href='/profile') Profile
-							li
-								a(href='/users/new') Sign up
-							li
-								a(href='/posts/new') New Entry
-						else
-							li.active
-								a(href='/') Home
-							li
-								a(href='/login') Login
-							li
-								a(href='users/new') Sign up
-							li
-								a(href='/posts/new') New Entry
+						li
+							a(href='/') Home
+						li
+							a(href='/profile') Profile
+						li.active
+							a(href='/posts/new') New Entry
+						li
+							a(href='/search') Search Post
+						li
+							a(href='/logout') Logout
 
 		div.container.center-align
 			div.row.text-align
@@ -40,22 +30,18 @@ html
 					p.title #{data.title}
 					p #{data.message}
 
-			div.row.text-align
-				div.col.l6.offset-l3.s12.post
-					if data.comments
-						each comment in data.comments
+			if data.comments
+				each comment in data.comments
+					div.row.text-align
+						div.col.l6.offset-l3.s12.post
+					
 							p #{comment.user.name}
 							p.title #{data.createdAt}
 							p #{comment.message}
-							
-							
-					button Comment
 
 			div.row.text-align
 				div.col.l6.offset-l3.s12.post
-
 					form(method='post' action='/comment')
-
 						p Comment
 						textarea(type='text', name='inputComment')
 

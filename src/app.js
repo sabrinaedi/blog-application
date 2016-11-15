@@ -6,6 +6,7 @@ const app = express()
 const sequelize = require('sequelize')
 const session = require('express-session')
 const bodyParser = require('body-parser')
+const bcrypt = require('bcrypt-nodejs')
 
 // set view engine to pug and default display files from view folder
 app.set('view engine', 'pug')
@@ -61,15 +62,12 @@ Post.hasMany(Comment)
 Comment.belongsTo(Post)
 
 
-
-//testroute to check if connection works
-app.get('/ping', (req, res) => {
-	res.send('Pong')
-}) 
-
 // route for index page, displaying all posts (including attributed User)
 app.get('/', (req, res) => {
 	console.log('index is running')
+	
+	let user = req.session.user
+
 	Post.findAll ( {
 		include: [{
 			model: User,
@@ -78,7 +76,8 @@ app.get('/', (req, res) => {
 	})
 	.then(posts => {
 		res.render('index', {
-			data: posts
+			data: posts,
+			user: user
 		})
 	})
 })
@@ -96,7 +95,7 @@ app.get('/users/new', (req, res) => {
 app.post('/users', (req, res) => {
 	User.create({
 		name: req.body.inputName,
-		email: req.body.inputEmail,
+		email: bcrypt.hashSync(req.body.inputEmail.toString(), bcrypt.genSaltSync(10)),
 		password: req.body.inputPassword
 	}).then (user => {  
 		req.session.user = user
@@ -118,8 +117,7 @@ app.get('/profile', (req, res) => {
 })
 
 // route for user login (start session)
-app.post('/login', (req, res) => {
-
+app.post('/login/user', (req, res) => {
 	User.findOne({
 		where: {
 			email: req.body.loginEmail
@@ -149,7 +147,12 @@ app.post('/logout', (req, res) => {
 
 // route to display form to create new post
 app.get('/posts/new', (req, res) => {
+	let user = req.session.user
+	if (user == undefined) {
+		res.send('Please log in to add a post')
+	} else {
 	res.render('newpost')
+	}
 })
 
 // route that creates a new post in the database tables
@@ -170,19 +173,24 @@ app.post('/posts', (req, res) => {
 
 //route to display details of a post and comment page
 app.get('/viewpost', (req, res) => {
-	console.log(req.query.id)
-	req.session.postid = req.query.id
-	Post.findOne({
-		where: {
-			id: req.query.id
-		},
-		include: [{model: User},{model: Comment, include: [User]}]
-	}).then ( post => {
-		console.log(post)
-		res.render('post', {
-			data: post
+	let user = req.session.user
+	if (user == undefined) {
+		res.send('Please log in or sign up to see and add comments')
+	} else {
+		console.log(req.query.id)
+		req.session.postid = req.query.id
+		Post.findOne({
+			where: {
+				id: req.query.id
+			},
+			include: [{model: User},{model: Comment, include: [User]}]
+		}).then ( post => {
+			console.log(post)
+			res.render('post', {
+				data: post
+			})
 		})
-	})
+	}
 })
 
 // route to add a new comment
@@ -197,21 +205,26 @@ app.post('/comment', (req, res) => {
 				id: req.session.postid
 			}
 		}).then ( post => {
-			user.createComment({
+			post.createComment({
 				message: req.body.inputComment
 			}).then( comment => {
 				comment.setUser(user)
 			} )
 		})
-
 	}).then (comment => {
-		res.redirect('/')
+		res.redirect('/viewpost')
 	})
 })
 
 // route that displays a page with a search fomr to look for specific users' posts
 app.get('/search', (req, res) => {
-	res.render('search')
+	let user = req.session.user
+	if (user == undefined) {
+		res.send ('To use the search function, please log in or sign up')
+	}
+	else {
+		res.render('search')
+	}
 })
 
 // route that takes in the user input from the searchbar and searches for corresponding posts
@@ -227,8 +240,6 @@ app.post('/searchUser', (req, res) => {
 			},
 			include: [User]
 		}).then ( post => {
-			console.log('LOOOK HEEEEEEEEEEERE:')
-			console.log(post)
 			res.render('search', {data: post})
 		})
 	})
