@@ -256,7 +256,7 @@ app.post('/searchUser', (req, res) => {
 
 // sequelizes synchronizes with postgres database, only then starts listening to the port
 // creates dummie users for programming and debuggin purposes when force is made true
-db.sync().then(db => {
+db.sync({force: true}).then(db => {
 	console.log('db is synced')
 	User.create({
 		name: "test",

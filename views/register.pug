@@ -22,16 +22,19 @@ html
 				div.col.l6.offset-l3.s12.post
 					div.input-field
 
-						form(method='post' action='/users')
+						form(method='post' action='/users' onsubmit="return passwordCheck()")
 
 							p Username
-							input(type='text', name='inputName' required pattern=".{5,10}" title="Choose a username that contains 5 to 10 characters")
+							input(type='text', name='inputName' required pattern=".{3,10}" title="Choose a username that contains 3 to 10 characters")
 
 							p E-mail
 							input(type='email', name='inputEmail' required)
 
 							p Password
-							input(type='password', name='inputPassword' required pattern=".{6,15}" title="Choose a password that contains 5 to 15 characters")
+							input#pass1(type='password', name='inputPassword' required pattern=".{8,15}" title="Choose a password that contains 8 to 15 characters")
+
+							p#passCheck Repeat password
+							input#pass2(type='password', name='inputPassword2' required pattern=".{8,15}" title="Choose a password that contains 8 to 15 characters")
 
 							br
 							br
