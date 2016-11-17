@@ -93,19 +93,17 @@ app.get('/users/new', (req, res) => {
 
 // action to register as a new user, redirect to profile
 app.post('/users', (req, res) => {
-	User.create({
-		name: req.body.inputName,
-		email: req.body.inputEmail,
-		password: bcrypt.genSaltSync(10, (err, salt) => {
-			bcrypt.hash(req.body.inputPassword.toString(), salt, (err, hash) => {
-				console.log(hash)
-			}) 
+	bcrypt.hash(req.body.inputPassword, null, null, function(err, hash) {
+	   	User.create({
+			name: req.body.inputName,
+			email: req.body.inputEmail,
+			password: hash
+		}).then (user => {  
+			req.session.user = user
+		}).then (user => {
+			res.redirect('/profile')
 		})
-	}).then (user => {  
-		req.session.user = user
-	}).then (user => {
-	res.redirect('/profile')
-	})
+	});
 })
 
 // route to show user profile
@@ -127,25 +125,29 @@ app.post('/login/user', (req, res) => {
 			email: req.body.loginEmail
 		}
 	}).then ( (user) => {
+		console.log('LOOK AT THIS USER:         ')
 		console.log(user)
+		console.log(req.body.loginPassword)
 		bcrypt.compare(req.body.loginPassword.toString(), user.password, (err, result) => {
+			console.log('THIS IS THE RESULT    ')
+			console.log(result)
 			if (user !== null && result == true) {
 				req.session.user = user
 				res.redirect('/profile')
-				(console.log('found match'))
+				console.log('found match')
 			} else {
 				console.log('found no match')
-				res.redirect('/')
+				res.send('Invalid email or password')
 			}
 		}), (error) => {
 			console.log('there was some other error')
-			res.redirect('/')
+			res.send('ERROR')
 		}
 	})
 })
 
 // route for logout function
-app.post('/logout', (req, res) => {
+app.get('/logout', (req, res) => {
 	console.log("was logged out")
 	delete req.session.user
 	res.redirect('/')

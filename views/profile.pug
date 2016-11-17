@@ -30,7 +30,7 @@ html
 					h3 Welcome, #{data.name}!
 
 					h3 Your e-mail address is #{data.email}
-			form(method='post' action='/logout' )
+			form(method='get' action='/logout' )
 				button Logout
 
 		include includes/footer.pug
