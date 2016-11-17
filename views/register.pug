@@ -25,13 +25,13 @@ html
 						form(method='post' action='/users')
 
 							p Username
-							input(type='text', name='inputName')
+							input(type='text', name='inputName' required pattern=".{5,10}" title="Choose a username that contains 5 to 10 characters")
 
 							p E-mail
-							input(type='text', name='inputEmail')
+							input(type='email', name='inputEmail' required)
 
 							p Password
-							input(type='text', name='inputPassword')
+							input(type='password', name='inputPassword' required pattern=".{6,15}" title="Choose a password that contains 5 to 15 characters")
 
 							br
 							br
