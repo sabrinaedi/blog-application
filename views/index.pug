@@ -4,43 +4,44 @@ html
 	include includes/header.pug
 
 	body
+		main
 
-		nav
-			.nav-wrapper
-				a.brand-logo.center
-					i.material-icons face 
-					ul.left.hide-on-med-and-dow
-						if user
-							li.active
-								a(href='/') Home
-							li
-								a(href='/profile') Profile
-							li
-								a(href='/posts/new') New Entry
-							li
-								a(href='/search') Search Post
-							li
-								a(href='/logout') Logout
-						else
-							li.active
-								a(href='/') Home
-							li
-								a(href='/login') Login
-							li
-								a(href='/users/new') Sign up
+			nav
+				.nav-wrapper
+					a.brand-logo.center
+						ul.left.hide-on-med-and-dow
+							if user
+								li.active
+									a(href='/') Home
+								li
+									a(href='/profile') Profile
+								li
+									a(href='/posts/new') New Entry
+								li
+									a(href='/search') Search Post
+								li
+									a(href='/logout') Logout
+							else
+								li.active
+									a(href='/') Home
+								li
+									a(href='/login') Login
+								li
+									a(href='/users/new') Sign up
 
 
-		h1.center-align THE Blog
+			h1 THE Blog App
 
-		each thing in data
-			div.container.center-align
-				div.row.text-align
-					div.col.l6.offset-l3.s12.post
-						if thing.user
+			each thing in data
+				div.container
+					div.row
+						div.col.l8.offset-l2.m6.offset-m3.s12.post
 							p #{thing.user.name}
-						p #{thing.createdAt}
-						a.title(href="/viewpost?id=" + thing.id) #{thing.title}
-						p #{thing.message}
+							p.date.right-align.title #{thing.createdAt}
+							div.center-align
+								h5 #{thing.title}
+								p.center-align #{thing.message}
+								a(href="/viewpost?id=" + thing.id) Click to view and make comments
 
 		include includes/footer.pug
 

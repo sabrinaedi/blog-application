@@ -3,40 +3,40 @@ html
 	include includes/header.pug
 	
 	body
-		nav
-			.nav-wrapper
-				a.brand-logo.center
-					i.material-icons face 
-					ul.left.hide-on-med-and-dow
-		
-						li
-							a(href='/') Home
-						li
-							a(href='/profile') Profile
-						li.active
-							a(href='/posts/new') New Entry
-						li
-							a(href='/search') Search Post
-						li
-							a(href='/logout') Logout
+		main
+			nav
+				.nav-wrapper
+					a.brand-logo.center
+						ul.left.hide-on-med-and-dow
+			
+							li
+								a(href='/') Home
+							li
+								a(href='/profile') Profile
+							li.active
+								a(href='/posts/new') New Entry
+							li
+								a(href='/search') Search Post
+							li
+								a(href='/logout') Logout
 
-		h1 Make a Post!
+			h1 Make a Post!
 
-		div.container.center-align
-				div.row.text-align
-					div.col.l6.offset-l3.s12.post
+			div.container.center-align
+					div.row.text-align
+						div.col.l6.offset-l3.s12.post
 
-						form(method='post' action='/posts')
+							form(method='post' action='/posts')
 
-							p Title
-							input(type='text', name='inputTitle')
+								p Title
+								input(type='text', name='inputTitle')
 
-							p Post
-							textarea(type='text', name='inputMessage')
+								p Post
+								textarea(type='text', name='inputMessage')
 
-							br
-							br
-							input(type='submit' value='submit')
+								br
+								br
+								input(type='submit' value='submit')
 
 		include includes/footer.pug
 

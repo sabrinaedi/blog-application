@@ -2,43 +2,46 @@ html
 	-var title = 'Sign up'
 	include includes/header.pug
 	body
+		main
+			nav
+				.nav-wrapper
+					a.brand-logo.center 
+						ul.left.hide-on-med-and-dow
+							li
+								a(href='/') Home
+							li
+								a(href='/login') Login
+							li.active
+								a(href='/users/new') Sign up
 
-		nav
-			.nav-wrapper
-				a.brand-logo.center
-					i.material-icons face 
-					ul.left.hide-on-med-and-dow
-						li
-							a(href='/') Home
-						li
-							a(href='/login') Login
-						li.active
-							a(href='/users/new') Sign up
+			h1 Sign up now!
 
-		h1.center-align Sign up now!
+			div.container.center-align
+				div.row.text-align
+					div.col.l6.offset-l3.s12.post
+						div.input-field
 
-		div.container.center-align
-			div.row.text-align
-				div.col.l6.offset-l3.s12.post
-					div.input-field
+							
+							if data !== 'undefined'
+								p.red #{data}
 
-						form(method='post' action='/users' onsubmit="return passwordCheck()")
+							form(method='post' action='/users' onsubmit="return passwordCheck()")
 
-							p Username
-							input(type='text', name='inputName' required pattern=".{3,10}" title="Choose a username that contains 3 to 10 characters")
+								p Username
+								input(type='text', name='inputName' required pattern=".{3,20}" title="Choose a username that contains 3 to 20 characters")
 
-							p E-mail
-							input(type='email', name='inputEmail' required)
+								p E-mail
+								input(type='email', name='inputEmail' required)
 
-							p Password
-							input#pass1(type='password', name='inputPassword' required pattern=".{8,15}" title="Choose a password that contains 8 to 15 characters")
+								p Password
+								input#pass1(type='password', name='inputPassword' required pattern=".{8,15}" title="Choose a password that contains 8 to 15 characters")
 
-							p#passCheck Repeat password
-							input#pass2(type='password', name='inputPassword2' required pattern=".{8,15}" title="Choose a password that contains 8 to 15 characters")
+								p#passCheck Repeat password
+								input#pass2(type='password', name='inputPassword2' required pattern=".{8,15}" title="Choose a password that contains 8 to 15 characters")
 
-							br
-							br
-							input(type='submit' value='submit')
+								br
+								br
+								input(type='submit' value='submit')
 
 		include includes/footer.pug
 
