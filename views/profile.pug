@@ -3,34 +3,33 @@ html
 	include includes/header.pug
 
 	body
+		main
+			nav
+				.nav-wrapper
+					a.brand-logo.center
+						ul.left.hide-on-med-and-dow
+							
+							li
+								a(href='/') Home
+							li.active
+								a(href='/profile') Profile
+							li
+								a(href='/posts/new') New Entry
+							li
+								a(href='/search') Search Post
+							li
+								a(href='/logout') Logout
 
-		nav
-			.nav-wrapper
-				a.brand-logo.center
-					i.material-icons face 
-					ul.left.hide-on-med-and-dow
-						
-						li
-							a(href='/') Home
-						li.active
-							a(href='/profile') Profile
-						li
-							a(href='/posts/new') New Entry
-						li
-							a(href='/search') Search Post
-						li
-							a(href='/logout') Logout
+			h1 Profile
 
-		h1.center-align Profile
+			div.container.center-align
+				div.row.text-align
+					div.col.l6.offset-l3.s12
 
-		div.container.center-align
-			div.row.text-align
-				div.col.l6.offset-l3.s12.post
+						h3 Welcome, #{data.name}!
 
-					h3 Welcome, #{data.name}!
+						p You logged in with the following e-mail address: #{data.email}
+				form(method='get' action='/logout' )
+					button Logout
 
-					h3 Your e-mail address is #{data.email}
-			form(method='get' action='/logout' )
-				button Logout
-
-		include includes/footer.pug
+	include includes/footer.pug
