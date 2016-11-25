@@ -26,6 +26,7 @@ app.use(session({
 	saveUninitialized: false
 }));
 
+//create variables for routing
 let loginRouter = require(__dirname + '/routes/login')
 let newPostRouter = require(__dirname + '/routes/newpost')
 let profileRouter = require(__dirname + '/routes/profile')
@@ -34,6 +35,7 @@ let postRouter = require (__dirname + '/routes/post')
 let registerRouter = require(__dirname + '/routes/register')
 let searchRouter = require(__dirname + '/routes/search')
 
+//set variables for routing
 app.use('/', loginRouter)
 app.use('/', newPostRouter)
 app.use('/', profileRouter)
