@@ -66,12 +66,7 @@ router.post('/login/user', (req, res) => {
 			email: req.body.loginEmail
 		}
 	}).then ( (user) => {
-		console.log('LOOK AT THIS USER:         ')
-		console.log(user)
-		console.log(req.body.loginPassword)
 		bcrypt.compare(req.body.loginPassword.toString(), user.password, (err, result) => {
-			console.log('THIS IS THE RESULT    ')
-			console.log(result)
 			if (user !== null && result == true) {
 				req.session.user = user
 				res.redirect('/profile')
@@ -89,7 +84,7 @@ router.post('/login/user', (req, res) => {
 
 // route for logout function
 router.get('/logout', (req, res) => {
-	console.log("was logged out")
+	console.log('was logged out')
 	delete req.session.user
 	res.redirect('/')
 })
