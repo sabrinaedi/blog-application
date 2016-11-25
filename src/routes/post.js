@@ -61,7 +61,6 @@ router.get('/viewpost', (req, res) => {
 	if (user == undefined) {
 		res.send('Please log in or sign up to see and add comments')
 	} else {
-		console.log(req.query.id)
 		req.session.postid = req.query.id
 		Post.findOne({
 			where: {
@@ -69,7 +68,6 @@ router.get('/viewpost', (req, res) => {
 			},
 			include: [{model: User},{model: Comment, include: [User]}]
 		}).then ( post => {
-			console.log(post)
 			res.render('post', {
 				data: post
 			})
