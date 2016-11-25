@@ -90,25 +90,25 @@ Comment.belongsTo(Post)
 
 
 // sequelizes synchronizes with postgres database, only then starts listening to the port
-// creates dummie users for programming and debuggin purposes when force is made true
-db.sync({force: true}).then(db => {
+// if {force:true}, creates dummie users for programming and debuggin purposes
+db.sync().then(db => {
 	console.log('db is synced')
-	User.create({
-		name: "test",
-		password: "test",
-		email: "test"
-	}). then( user => {
-		user.createPost({
-			title: "testpost",
-			message: "blablabla"
-		}).then( post => {
-			post.createComment({
-				message: "comment blablablaba"
-			}).then( comment => {
-				comment.setUser( user)
-			})
-		})
-	})
+//	User.create({
+//		name: "test",
+//		password: "test",
+//		email: "test"
+//	}). then( user => {
+//		user.createPost({
+//			title: "testpost",
+//			message: "blablabla"
+//		}).then( post => {
+//			post.createComment({
+//				message: "comment blablablaba"
+//			}).then( comment => {
+//				comment.setUser( user)
+//			})
+//		})
+//	})
 
 }).then (db => {
 	//determine a port

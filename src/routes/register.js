@@ -63,7 +63,7 @@ router.get('/users/new', (req, res) => {
 
 // action to register as a new user, redirect to profile
 router.post('/users', (req, res) => {
-	if (req.body.inputPassword.length>7 && req.body.inputName.length>0) {
+	if (req.body.inputPassword.length>7 && req.body.inputName.length>3) {
 		User.count ( {
 			where: sequelize.or(
 				{ email: req.body.inputEmail},
